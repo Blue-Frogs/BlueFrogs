@@ -7,12 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +35,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import android.Manifest;
 import android.widget.Toast;
@@ -39,11 +44,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     final int PERMISSION_CODE = 1;
     private  String cityName;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
         searchIV = findViewById(R.id.idIVSearch);
 
         weatherRVModelArrayList = new ArrayList<>();
-        weatherRVAdapter = new WeatherRVAdapter(this.weatherRVModelArrayList);
+        weatherRVAdapter = new WeatherRVAdapter(MainActivity.this, weatherRVModelArrayList);
+
+        //WeatherRVAdapter adapter = new WeatherRVAdapter(MainActivity.this, weatherRVModelArrayList);
+
         weatherRV.setAdapter(weatherRVAdapter);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -96,10 +103,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Get user current location
         Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
-//        cityName = getCityName(location.getLongitude(),location.getLatitude());
+        //.d(TAG, String.valueOf(location.getLongitude()));
+        //cityName = getCityName(location.getLongitude(),location.getLatitude());
 
         //Get Weather information based on the location
-        getWeatherInfo("London");
+        getWeatherInfo("Los Angles");
 
         //Setting city name inside the search image view
         searchIV.setOnClickListener(new View.OnClickListener() {
@@ -160,29 +168,42 @@ public class MainActivity extends AppCompatActivity {
 
     //Get location weather information using API key
     private void getWeatherInfo(String cityName){
-        String url = "http://api.weatherapi.com/v1/forecast.json?key=94c17645a4164b6dacf82540232806&q=" + cityName + "&days=1&aqi=no&alerts=no";
+        String url = "https://api.weatherapi.com/v1/forecast.json?key=94c17645a4164b6dacf82540232806&q=" + cityName + "&days=1&aqi=no&alerts=no";
 
         cityNameTV.setText(cityName);
+
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(JSONObject response) {
+
                 loadingPB.setVisibility(View.GONE);
                 homeRL.setVisibility(View.VISIBLE);
                 weatherRVModelArrayList.clear();
 
                 try {
+                    //cityNameTV.setText(response.getJSONObject("location").getString("name"));
+
                     String temperature = response.getJSONObject("current").getString("temp_f");
                     temperatureTV.setText(temperature + "°F");
 
                     int isDay = response.getJSONObject("current").getInt("is_day");
                     //Morning image
+                    int targetWidth = 500;
+                    int targetHeight = 500;
                     if(isDay == 1){
-                        Picasso.get().load(R.drawable.morning).into(backIV);
+                        Picasso.get()
+                                .load(R.drawable.morning)
+                                .resize(targetWidth, targetHeight)
+                                .into(backIV);
                     }
                     //Night image
                     else {
-                        Picasso.get().load(R.drawable.evening).into(backIV);
+                        Picasso.get()
+                                .load(R.drawable.night)
+                                .resize(targetWidth, targetHeight)
+                                .into(backIV);
                     }
 
                     String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
@@ -206,13 +227,16 @@ public class MainActivity extends AppCompatActivity {
                     weatherRVAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    //throw new RuntimeException(e);
+                    Log.e("JSON Exception:", e.toString());
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(MainActivity.this, "Please enter valid city name.", Toast.LENGTH_SHORT).show();
+                Log.e("GetByIdErrorResponse", error.toString());
+                //callback.onError(error.toString());
             }
         });
 
