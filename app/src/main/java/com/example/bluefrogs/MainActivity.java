@@ -16,6 +16,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,28 +87,43 @@ public class MainActivity extends AppCompatActivity {
 
         weatherRVModelArrayList = new ArrayList<>();
         weatherRVAdapter = new WeatherRVAdapter(MainActivity.this, weatherRVModelArrayList);
-
         //WeatherRVAdapter adapter = new WeatherRVAdapter(MainActivity.this, weatherRVModelArrayList);
 
         weatherRV.setAdapter(weatherRVAdapter);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        //Get user permission to find current location
+        // Get user permission to find current location
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_CODE);
         }
+        else {
+            // Request location updates
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    // Remove the location updates to avoid redundant calls
+                    locationManager.removeUpdates(this);
+                    Log.d(TAG, String.valueOf(location.getLongitude()));
+                    Log.d(TAG, String.valueOf(location.getLatitude()));
+                    // Get the city name based on the current location
+                    cityName = getCityName(location.getLongitude(), location.getLatitude());
 
-        //Get user current location
-        Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
-        //.d(TAG, String.valueOf(location.getLongitude()));
-        //cityName = getCityName(location.getLongitude(),location.getLatitude());
+                    // Get weather information based on the location
+                    getWeatherInfo(cityName);
+                }
 
-        //Get Weather information based on the location
-        getWeatherInfo("Los Angles");
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
+                @Override
+                public void onProviderEnabled(String provider) {}
+                @Override
+                public void onProviderDisabled(String provider) {}
+            });
+        }
 
         //Setting city name inside the search image view
         searchIV.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +258,4 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue.add(jsonObjectRequest);
     }
-
-
 }
