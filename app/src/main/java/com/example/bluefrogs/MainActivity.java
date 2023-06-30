@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
     private LocationManager locationManager;
-    private Button logoutB;
+    private Button logoutB, recomB;
     final int PERMISSION_CODE = 1;
     private  String cityName;
 
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         iconIV = findViewById(R.id.idIVIcon);
         searchIV = findViewById(R.id.idIVSearch);
         logoutB = findViewById(R.id.idBlogout);
+        recomB = findViewById(R.id.idBrecom);
 
         //Log out
         if(user == null){
@@ -103,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 openLogin();
+            }
+        });
+
+        recomB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openRecommend();
             }
         });
 
@@ -163,6 +171,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openLogin() {
         Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void openRecommend() {
+        Intent intent = new Intent(this, Recommend.class);
         startActivity(intent);
         finish();
     }
