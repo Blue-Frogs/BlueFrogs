@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private Button logoutB, recomB;
     final int PERMISSION_CODE = 1;
-    private  String cityName, temperature;
-    public static final String EXTRA_CITY_NAME = "cityName", EXTRA_TEMPERATURE = "temperature";
+    private  String cityName, temperature, wind;
+    public static final String EXTRA_CITY_NAME = "cityName", EXTRA_TEMPERATURE = "temperature", EXTRA_WIND = "wind";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Recommend.class);
         intent.putExtra(EXTRA_CITY_NAME, cityName);
         intent.putExtra(EXTRA_TEMPERATURE, temperature);
+        intent.putExtra(EXTRA_WIND, wind);
         startActivity(intent);
         finish();
     }
@@ -240,15 +241,14 @@ public class MainActivity extends AppCompatActivity {
                 weatherRVModelArrayList.clear();
 
                 try {
-                    //cityNameTV.setText(response.getJSONObject("location").getString("name"));
-
+                    //Get temperature
                     temperature = response.getJSONObject("current").getString("temp_f");
                     temperatureTV.setText(temperature + "°F");
 
+                    //Get day or night
                     int isDay = response.getJSONObject("current").getInt("is_day");
-                    //Morning image
                     int targetWidth = 500, targetHeight = 500;
-
+                    //Morning image
                     if(isDay == 1){
                         Picasso.get()
                                 .load(R.drawable.morning)
@@ -263,16 +263,21 @@ public class MainActivity extends AppCompatActivity {
                                 .into(backIV);
                     }
 
+                    //Get wind speed
+                    wind = response.getJSONObject("current").getString("wind_mph");
+
+                    //Get condition and condition icon
                     String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
                     Picasso.get().load("http:".concat(conditionIcon)).into(iconIV);
                     conditionTV.setText(condition);
 
+                    //Get time
                     JSONObject forecastObj = response.getJSONObject("forecast");
                     JSONObject forecastO = forecastObj.getJSONArray("forecastday").getJSONObject(0);
                     JSONArray hourArray = forecastO.getJSONArray("hour");
 
-                    //Set time, temperature, condition, wind
+                    //Set time, temperature, condition, wind for whole day
                     for(int i = 0; i < hourArray.length(); i ++){
                         JSONObject hourObj = hourArray.getJSONObject(i);
                         String time = hourObj.getString("time");
