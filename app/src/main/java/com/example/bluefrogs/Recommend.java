@@ -11,7 +11,8 @@ import android.widget.TextView;
 public class Recommend extends AppCompatActivity {
     TextView cityNameTV, temperatureTV, windTV;
     Button weatherB;
-    private String cityName, temperature, wind;
+    private String cityName, temperatureString, wind;
+    private double temperature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +27,13 @@ public class Recommend extends AppCompatActivity {
         //Get current city name, temperature, and wind speed from MainActivity page
         Intent intent = getIntent();
         cityName = intent.getStringExtra(MainActivity.EXTRA_CITY_NAME);
-        temperature = intent.getStringExtra(MainActivity.EXTRA_TEMPERATURE);
+        temperatureString = intent.getStringExtra(MainActivity.EXTRA_TEMPERATURE);
+        temperature = Double.parseDouble(temperatureString);
         wind = intent.getStringExtra(MainActivity.EXTRA_WIND);
 
-        //Set city name, temperature, and wind
+        //Set city name, temperature, and wind into Text View
         cityNameTV.setText(cityName);
-        temperatureTV.setText(temperature);
+        temperatureTV.setText(temperature + "°F");
         windTV.setText(wind + "mph");
 
         //Go back to MainActivity page
@@ -41,6 +43,16 @@ public class Recommend extends AppCompatActivity {
                 openMain();
             }
         });
+
+        if(temperature >= 100){
+            //Hot
+        }
+        else if(temperature >= 60){
+            //warm
+        }
+        else{
+            //cold
+        }
     }
 
     public void openMain(){
