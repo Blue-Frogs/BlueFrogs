@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.textservice.TextInfo;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -35,6 +37,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -52,7 +56,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
+    FirebaseAuth mAuth;
+    FirebaseUser user;
     private RelativeLayout homeRL;
     private ProgressBar loadingPB;
     private TextView cityNameTV, temperatureTV, conditionTV;
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
     private LocationManager locationManager;
+    private Button logoutB;
     final int PERMISSION_CODE = 1;
     private  String cityName;
 
@@ -70,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //Make Full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         homeRL = findViewById(R.id.idRLHome);
         loadingPB = findViewById(R.id.idPBLoading);
@@ -84,13 +92,24 @@ public class MainActivity extends AppCompatActivity {
         backIV = findViewById(R.id.idIVBack);
         iconIV = findViewById(R.id.idIVIcon);
         searchIV = findViewById(R.id.idIVSearch);
+        logoutB = findViewById(R.id.idBlogout);
+
+        //Log out
+        if(user == null){
+            openLogin();
+        }
+        logoutB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                openLogin();
+            }
+        });
 
         weatherRVModelArrayList = new ArrayList<>();
         weatherRVAdapter = new WeatherRVAdapter(MainActivity.this, weatherRVModelArrayList);
         //WeatherRVAdapter adapter = new WeatherRVAdapter(MainActivity.this, weatherRVModelArrayList);
-
         weatherRV.setAdapter(weatherRVAdapter);
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // Get user permission to find current location
@@ -141,6 +160,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void openLogin() {
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -206,8 +230,8 @@ public class MainActivity extends AppCompatActivity {
 
                     int isDay = response.getJSONObject("current").getInt("is_day");
                     //Morning image
-                    int targetWidth = 500;
-                    int targetHeight = 500;
+                    int targetWidth = 500, targetHeight = 500;
+
                     if(isDay == 1){
                         Picasso.get()
                                 .load(R.drawable.morning)
