@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private Button logoutB, recomB;
     final int PERMISSION_CODE = 1;
-    private  String cityName;
+    private  String cityName, temperature;
+    public static final String EXTRA_CITY_NAME = "cityName", EXTRA_TEMPERATURE = "temperature";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         backIV = findViewById(R.id.idIVBack);
         iconIV = findViewById(R.id.idIVIcon);
         searchIV = findViewById(R.id.idIVSearch);
-        logoutB = findViewById(R.id.idBlogout);
-        recomB = findViewById(R.id.idBrecom);
+        logoutB = findViewById(R.id.idBLogout);
+        recomB = findViewById(R.id.idBRecom);
 
         //Log out
         if(user == null){
@@ -177,6 +178,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void openRecommend() {
         Intent intent = new Intent(this, Recommend.class);
+        intent.putExtra(EXTRA_CITY_NAME, cityName);
+        intent.putExtra(EXTRA_TEMPERATURE, temperature);
         startActivity(intent);
         finish();
     }
@@ -239,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     //cityNameTV.setText(response.getJSONObject("location").getString("name"));
 
-                    String temperature = response.getJSONObject("current").getString("temp_f");
+                    temperature = response.getJSONObject("current").getString("temp_f");
                     temperatureTV.setText(temperature + "°F");
 
                     int isDay = response.getJSONObject("current").getInt("is_day");
