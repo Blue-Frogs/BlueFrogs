@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         Log.d(TAG, "CITY NOT FOUND");
+                        cityName = "Los Angeles";
                         //Toast.makeText(this, "User City Not Found.", Toast.LENGTH_SHORT).show();
                     }
                 }
