@@ -4,27 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login2"
+    android:background="@drawable/Login2"
     tools:context=".Login">
 
     <TextView
-        android:id="@+id/idTVsignin"
+        android:id="@+id/idTVlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In"
+        android:text="Login"
         android:textColor="@color/black"
         android:textSize="30dp"
         android:layout_marginTop="420dp"
         android:gravity="center"
         android:textStyle="bold"
-
         />
 
     <EditText
         android:id="@+id/idETusername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/idTVsignin"
+        android:layout_below="@id/idTVlogin"
         android:layout_marginHorizontal="40dp"
         android:layout_marginVertical="10dp"
         android:padding="20dp"
