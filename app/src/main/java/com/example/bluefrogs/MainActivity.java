@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<WeatherRVModel> weatherRVModelArrayList;
     private WeatherRVAdapter weatherRVAdapter;
     private LocationManager locationManager;
-    private Button logoutB, recomB;
+    private Button logoutB, recomB, prefB;
     final int PERMISSION_CODE = 1;
     private  String cityName, temperature, wind;
     public static final String EXTRA_CITY_NAME = "cityName", EXTRA_TEMPERATURE = "temperature", EXTRA_WIND = "wind";
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         searchIV = findViewById(R.id.idIVSearch);
         logoutB = findViewById(R.id.idBLogout);
         recomB = findViewById(R.id.idBRecom);
+        prefB = findViewById(R.id.idBPref);
 
         //Log out
         if(user == null){
@@ -112,6 +113,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openRecommend();
+            }
+        });
+
+        prefB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
             }
         });
 
