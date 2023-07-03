@@ -119,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
         prefB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
+                Intent intent1 = new Intent(MainActivity.this, Preference.class);
+                startActivity(intent1);
             }
         });
 
