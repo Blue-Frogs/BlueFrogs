@@ -26,10 +26,45 @@ public class Recommend extends AppCompatActivity {
     Random r;
 
     // Generates random image from these three below
-    Integer[] images = {
-            R.drawable.htemp1,
-            R.drawable.htemp2,
-            R.drawable.htemp3
+    Integer[] allHot = {
+            R.drawable.red_hot,
+            R.drawable.blue_hot
+
+    };
+
+    Integer[] allAvg = {
+            R.drawable.red_average,
+            R.drawable.blue_average
+
+    };
+
+    Integer[] allCold = {
+            R.drawable.red_cold,
+            R.drawable.blue_cold
+
+    };
+
+    Integer[] redHot = {
+            R.drawable.red_hot
+    };
+    Integer[] blueHot = {
+            R.drawable.blue_hot
+    };
+
+    Integer[] redAvg = {
+            R.drawable.red_average
+    };
+
+    Integer[] blueAvg = {
+            R.drawable.blue_average
+    };
+
+    Integer[] redCold = {
+            R.drawable.red_cold
+    };
+
+    Integer[] blueCold = {
+            R.drawable.blue_cold
     };
 
 
@@ -82,17 +117,19 @@ public class Recommend extends AppCompatActivity {
         {
             //hot
             hotTempTV.setText("Cool clothing to beat the heat");
-            imageView.setImageResource(images[r.nextInt(images.length)]);
+            imageView.setImageResource(allHot[r.nextInt(allHot.length)]);
         }
         else if(temperature >=60)
 
         {
             //warm
+            imageView.setImageResource(allAvg[r.nextInt(allAvg.length)]);
         }
         else
 
         {
             //cold
+            imageView.setImageResource(allCold[r.nextInt(allCold.length)]);
         }
 
         // The purpose of this is simply to enable the generate new outfit button to work, code repeat is intentional
@@ -103,17 +140,20 @@ public class Recommend extends AppCompatActivity {
 
                 {
                     //hot
-                    imageView.setImageResource(images[r.nextInt(images.length)]);
+                    imageView.setImageResource(allHot[r.nextInt(allHot.length)]);
+
                 }
                 else if(temperature >=60)
 
                 {
                     //warm
+                    imageView.setImageResource(allAvg[r.nextInt(allAvg.length)]);
                 }
                 else
 
                 {
                     //cold
+                    imageView.setImageResource(allCold[r.nextInt(allCold.length)]);
                 }
             }
 
