@@ -16,6 +16,14 @@ public class Colors extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colors);
 
+        //Marking the default of the switches to be on so it shows all outfit options
+        Switch redSwitch = findViewById(R.id.redSwitch);
+        redSwitch.setChecked(true);
+        Switch yellowSwitch = findViewById(R.id.yellowSwitch);
+        yellowSwitch.setChecked(true);
+        Switch blueSwitch = findViewById(R.id.blueSwitch);
+        blueSwitch.setChecked(true);
+        
         preferenceB = findViewById(R.id.idBPreference); //For returning to Preference
 
         //Return to Preference page when button is clicked
