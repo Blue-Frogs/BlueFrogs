@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Colors">
+
+    <ImageView
+        android:id="@+id/idIVBack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/colors_wallpaper"
+        android:scaleType="centerCrop"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/idBPreference"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/cream"
+        android:drawableTop="@drawable/black_baseline_arrow_back_24"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/idIVBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idIVBack"
+        app:layout_constraintVertical_bias="0.9" />
+
+    <TextView
+        android:id="@+id/idTColorsTitle"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="Color Options"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03" />
+
+
+    <Switch
+        android:id="@+id/redSwitch"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:text="Red"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:thumbTint="#880808"
+        android:trackTint="#880808"
+        app:layout_constraintBottom_toBottomOf="@+id/idIVBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idTColorsTitle"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <Switch
+        android:id="@+id/yellowSwitch"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:text="Yellow"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:thumbTint="#FDDA0D"
+        android:trackTint="#FDDA0D"
+        app:layout_constraintBottom_toBottomOf="@+id/idIVBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idTColorsTitle"
+        app:layout_constraintVertical_bias="0.12" />
+
+    <Switch
+        android:id="@+id/blueSwitch"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
+        android:text="Blue"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:thumbTint="#0047AB"
+        android:trackTint="#0047AB"
+        app:layout_constraintBottom_toBottomOf="@+id/idIVBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idTColorsTitle"
+        app:layout_constraintVertical_bias="0.22" />
+</androidx.constraintlayout.widget.ConstraintLayout>
