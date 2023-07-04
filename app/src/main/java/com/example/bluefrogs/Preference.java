@@ -20,7 +20,7 @@ public class Preference extends AppCompatActivity {
         setContentView(R.layout.activity_preference);
 
         weatherB = findViewById(R.id.idBWeather); //For returning to MainActivity
-        colorsB = findViewById(R.id.idBColors); //For Colors page
+        //---------colorsB = findViewById(R.id.idBColors); //For Colors page
 
         //Return to MainActivity page when button is clicked
         weatherB.setOnClickListener(new View.OnClickListener() {
@@ -28,8 +28,15 @@ public class Preference extends AppCompatActivity {
             public void onClick(View view) {
                 openMain();
             }
+
+            private void openMain() {
+                Intent intent = new Intent(Preference.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
+    /*-------------------------------
         //To go to Colors Preference page
         colorsB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,11 +45,8 @@ public class Preference extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+
+     */
     }
 
-    public void openMain(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }
