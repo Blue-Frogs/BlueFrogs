@@ -28,19 +28,22 @@ public class Recommend extends AppCompatActivity {
     // Generates random image from these three below
     Integer[] allHot = {
             R.drawable.red_hot,
-            R.drawable.blue_hot
+            R.drawable.blue_hot,
+            R.drawable.yellow_hot
 
     };
 
     Integer[] allAvg = {
             R.drawable.red_average,
-            R.drawable.blue_average
+            R.drawable.blue_average,
+            R.drawable.yellow_average
 
     };
 
     Integer[] allCold = {
             R.drawable.red_cold,
-            R.drawable.blue_cold
+            R.drawable.blue_cold,
+            R.drawable.yellow_cold
 
     };
 
@@ -50,21 +53,30 @@ public class Recommend extends AppCompatActivity {
     Integer[] blueHot = {
             R.drawable.blue_hot
     };
+    Integer[] yellowHot = {
+            R.drawable.yellow_hot
+    };
+
 
     Integer[] redAvg = {
             R.drawable.red_average
     };
-
     Integer[] blueAvg = {
             R.drawable.blue_average
     };
+    Integer[] yellowAvg = {
+            R.drawable.yellow_average
+    };
+
 
     Integer[] redCold = {
             R.drawable.red_cold
     };
-
     Integer[] blueCold = {
             R.drawable.blue_cold
+    };
+    Integer[] yellowCold = {
+            R.drawable.yellow_cold
     };
 
 
