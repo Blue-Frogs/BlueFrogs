@@ -57,10 +57,10 @@ public class Recommend extends AppCompatActivity {
             R.drawable.yellow_hot
     };
 
-
     Integer[] redAvg = {
             R.drawable.red_average
     };
+
     Integer[] blueAvg = {
             R.drawable.blue_average
     };
@@ -68,10 +68,10 @@ public class Recommend extends AppCompatActivity {
             R.drawable.yellow_average
     };
 
-
     Integer[] redCold = {
             R.drawable.red_cold
     };
+
     Integer[] blueCold = {
             R.drawable.blue_cold
     };
